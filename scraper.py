@@ -5,8 +5,9 @@ def run(count):
     import requests
     num = 1
     rmv = ['"leaderboardName"', '"score"']
+    url = 'https://x9c98fh3ng.execute-api.eu-west-1.amazonaws.com/production/leaderboard?campaignId={n}&limit=100'  # Log URL, n being the campaign's number.
     while True:
-        s = requests.get(f'https://x9c98fh3ng.execute-api.eu-west-1.amazonaws.com/production/leaderboard?campaignId={num}&limit=100') # Log URL, num being the campaign's number.
+        s = requests.get(url.format(n = num))
         t = s.text
         if t != '[]':
             t = t.translate({ord(c): None for c in '[]'})
@@ -21,7 +22,8 @@ def run(count):
                     import os
                     os.mkdir('Logs')
                     print('Folder created.')
-            for i in t_l: # Code for reformatting & beautifying the data.
+            f.write(url.format(n = num).encode('utf-8'))
+            for i in t_l:  # Code for reformatting & beautifying the data.
                 i_l = i.split(',')
                 i_l.reverse()
                 add_colon = True
